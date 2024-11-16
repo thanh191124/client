@@ -18,23 +18,25 @@ import {
   ModalFooter,
 } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
-import { UserController } from '../../controller/userController.tsx';
+import { UserController } from '../../controller/userController.ts';
+import {User} from'../../model/userModel.ts';
 
 export default function UserForm() {
   const location = useLocation(); 
   const query = new URLSearchParams(location.search);
   const id = query.get('id') || ""; // Default to an empty string if id is null
 
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     UserID: "",
     Username: "",
-    Password: "", // Avoid displaying Password in the form
+    Password: "",
     Email: "",
     Address: "",
     PhoneNumber: "",
     Role: "User",
     status: "Active",
   });
+  
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalMessage, setModalMessage] = useState("");
@@ -42,7 +44,7 @@ export default function UserForm() {
 
   const getDataUserByID = async () => {
     try {
-      const data = await UserController.getUserByID(id);
+      const data:any = await UserController.getUserByID(id);
       console.log(data); // Data received from API
       
       // Update user state with data received

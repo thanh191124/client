@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Box, Card, Grid, Button, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
+import {CategoryController} from '../../controller/categoryController.ts';
+import {ProductController}  from '../../controller/productController.ts';
 export default function ProductAdd() {
     interface OptionCategory {
         CategoryID: string;  // Changed String to string
@@ -32,21 +33,24 @@ export default function ProductAdd() {
         OtherImages: [],
         ShortDescription: '',
     });
-    const getDataCategory = async () => {
+    const getDataCategorys = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/getall-category', {
-                method: 'GET',
-            });
+            const response: any = await CategoryController.getAllCategories();
+            console.log(response);
+            setOptionCategory(response); // Set categories directly
+            // const response = await fetch('http://localhost:3000/api/getall-category', {
+            //     method: 'GET',
+            // });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data);
-                setOptionCategory(data); // Set categories directly
+            // if (response.ok) {
+            //     const data = await response.json();
+            //     console.log(data);
+            //     setOptionCategory(data); // Set categories directly
 
-                return data; // Trả về dữ liệu nếu cần sử dụng ở nơi khác
-            } else {
-                console.error('Failed to fetch categories:', response.status);
-            }
+            //     return data; // Trả về dữ liệu nếu cần sử dụng ở nơi khác
+            // } else {
+            //     console.error('Failed to fetch categories:', response.status);
+            // }
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
@@ -86,17 +90,13 @@ export default function ProductAdd() {
     
         try {
             console.log(formData)
-            const response = await fetch('http://localhost:3000/api/products/creates', {
-                method: 'POST',
-                body: formData,
-            });
-    
-            if (response.ok) {
-                const data = await response.json();
+            const data:any = await ProductController.createProduct(formData);
+            if (data) {
+                // const data = await response.json();
                 console.log('Product created successfully:', data);
                 alert('thêm sản phẩm thành công');
             } else {
-                console.error('Failed to create product:', response.status);
+                console.error('Failed to create product:', data.status);
                 alert('thêm sản phẩm thất bại');
 
             }
@@ -106,19 +106,16 @@ export default function ProductAdd() {
     };
     
     useEffect(() => {
-        getDataCategory();
+        getDataCategorys();
     }, []);
 
     return (
         <Box pt={{ base: "20px", md: "80px", xl: "80px" }}>
-        <Card p={5} mb={{ base: "0px", lg: "40px" }} style={{ height: 'auto', width: '100%' }}>
-            <div className="card-title">
-                THÊM SẢN PHẨM MỚI
-            </div>
+        <Card p={5} mb={{ base: "0px", lg: "40px" }} borderRadius="md" boxShadow="md">
             <form onSubmit={handleSubmit}>
-                <Grid templateColumns="1fr" gap={6}>
+                <Grid templateColumns={{ base: "1fr", md: "1fr 1fr" }} gap={6}>
                     
-                    {/* Product Name */}
+                    {/* Tên Sản Phẩm */}
                     <FormControl>
                         <FormLabel htmlFor="productName">Tên Sản phẩm</FormLabel>
                         <Input
@@ -126,21 +123,25 @@ export default function ProductAdd() {
                             type="text"
                             value={product.ProductName}
                             onChange={(e) => setProduct({ ...product, ProductName: e.target.value })}
+                            placeholder="Nhập tên sản phẩm"
+                            variant="outline"
                         />
                     </FormControl>
-    
-                    {/* Price */}
+
+                    {/* Giá */}
                     <FormControl>
-                        <FormLabel htmlFor="price">Price</FormLabel>
+                        <FormLabel htmlFor="price">Giá</FormLabel>
                         <Input
                             id="price"
                             type="text"
                             value={product.Price}
                             onChange={(e) => setProduct({ ...product, Price: e.target.value })}
+                            placeholder="Nhập giá sản phẩm"
+                            variant="outline"
                         />
                     </FormControl>
-    
-                    {/* Stock Quantity */}
+
+                    {/* Số Lượng Kho */}
                     <FormControl>
                         <FormLabel htmlFor="stockQuantity">Số Lượng Kho</FormLabel>
                         <Input
@@ -148,82 +149,91 @@ export default function ProductAdd() {
                             type="text"
                             value={product.StockQuantity}
                             onChange={(e) => setProduct({ ...product, StockQuantity: e.target.value })}
+                            placeholder="Nhập số lượng kho"
+                            variant="outline"
                         />
                     </FormControl>
-    
-                    {/* Category ID */}
+
+                    {/* ID Danh Mục */}
                     <FormControl>
                         <FormLabel htmlFor="categoryId">ID Danh Mục</FormLabel>
                         <Select
                             id="categoryId"
                             value={product.CategoryID}
                             onChange={(e) => setProduct({ ...product, CategoryID: e.target.value })}
+                            placeholder="Chọn danh mục"
+                            variant="outline"
                         >
-                            <option value="">Select a category</option>
                             {OptionCategory.map((category) => (
                                 <option key={category.CategoryID} value={category.CategoryID}>
-                                    {category.CategoryName} {/* Display category name */}
+                                    {category.CategoryName}
                                 </option>
                             ))}
                         </Select>
                     </FormControl>
-    
-                    {/* Status */}
+
+                    {/* Trạng Thái */}
                     <FormControl>
                         <FormLabel htmlFor="status">Trạng Thái</FormLabel>
                         <Select
                             id="status"
                             value={product.status}
                             onChange={(e) => setProduct({ ...product, status: e.target.value })}
+                            placeholder="Chọn trạng thái"
+                            variant="outline"
                         >
-                            <option value="">Select a status</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                            <option value="pending">Pending</option>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Ngừng hoạt động</option>
+                            <option value="pending">Đang chờ</option>
                         </Select>
                     </FormControl>
-    
-                    {/* Main Image */}
-                  
-    
-                    {/* Other Images */}
+
+                    {/* Hình Phụ */}
                     <FormControl>
-                        <FormLabel htmlFor="otherImages">Hình Phụ (up to 5)</FormLabel>
+                        <FormLabel htmlFor="otherImages">Hình Phụ (tối đa 5)</FormLabel>
                         <Input
                             id="otherImages"
                             type="file"
                             accept="image/*"
                             multiple
                             onChange={handleOtherImagesChange}
+                            variant="outline"
                         />
                     </FormControl>
-    
-                    {/* Product Description */}
+
+                    {/* Mô Tả Sản Phẩm */}
                     <FormControl>
-                        <FormLabel htmlFor="description">Description</FormLabel>
+                        <FormLabel htmlFor="description">Mô Tả</FormLabel>
                         <ReactQuill
                             value={product.Description}
                             onChange={(value) => setProduct({ ...product, Description: value })}
+                            placeholder="Nhập mô tả sản phẩm"
                         />
                     </FormControl>
-    
-                    {/* Short Description */}
+
+                    {/* Mô Tả Ngắn */}
                     <FormControl>
-                        <FormLabel htmlFor="shortDescription">Short Description</FormLabel>
+                        <FormLabel htmlFor="shortDescription">Mô Tả Ngắn</FormLabel>
                         <ReactQuill
                             value={product.ShortDescription}
                             onChange={(value) => setProduct({ ...product, ShortDescription: value })}
+                            placeholder="Nhập mô tả ngắn"
                         />
                     </FormControl>
-    
                 </Grid>
-    
-                <Button type="submit" colorScheme="blue" style={{ marginTop: '70px' }}>
+
+                <Button 
+                    type="submit" 
+                    colorScheme="blue" 
+                    mt={8} 
+                    width="100%"
+                    borderRadius="md" // Hình vuông với góc bo nhẹ
+
+                >
                     Thêm Sản Phẩm
                 </Button>
             </form>
         </Card>
     </Box>
-    
     );
 }

@@ -1,11 +1,13 @@
-import Category from '../model/categoryModel.tsx'; // Đảm bảo đường dẫn và tên file đúng
+import { Category } from '../model/categoryModel.tsx'; // Ensure correct path to your Category model
 
-export class CategoryService {
+const apiUrl = process.env.REACT_APP_API_URL; // Access API URL from environment variable
+
+export class CategoryController {
     
-    // Hàm lấy tất cả danh mục
+    // Fetch all categories
     static async getAllCategories(): Promise<Category[]> {
         try {
-            const response = await fetch('http://localhost:3000/api/getall-category', {
+            const response = await fetch(`${apiUrl}api/getall-category`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -20,19 +22,19 @@ export class CategoryService {
             return data;
         } catch (error) {
             console.error('Error fetching categories:', error);
-            throw error; // Ném lỗi ra ngoài để xử lý
+            throw error;
         }
     }
 
-    // Hàm tạo danh mục mới
-    static async createCategory(newCategory: Category): Promise<Category> {
+    // Create a new category
+    static async createCategory(newCategory: any): Promise<Category> {
         try {
-            const response = await fetch('http://localhost:3000/api/create-category', {
+            const response = await fetch(`${apiUrl}api/create-category`, {
                 method: 'POST',
+                body: JSON.stringify(newCategory),
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newCategory),
             });
             
             if (!response.ok) {
@@ -43,14 +45,14 @@ export class CategoryService {
             return data;
         } catch (error) {
             console.error('Error creating category:', error);
-            throw error; // Ném lỗi ra ngoài để xử lý
+            throw error;
         }
     }
 
-    // Hàm lấy danh mục theo ID
+    // Fetch category by ID
     static async getCategoryByID(id: string): Promise<Category> {
         try {
-            const response = await fetch(`http://localhost:3000/api/get-category/${id}`, {
+            const response = await fetch(`${apiUrl}api/get-category/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -65,19 +67,19 @@ export class CategoryService {
             return data;
         } catch (error) {
             console.error('Error fetching category by ID:', error);
-            throw error; // Ném lỗi ra ngoài để xử lý
+            throw error;
         }
     }
 
-    // Hàm cập nhật danh mục theo ID
-    static async updateCategoryByID(id: string, updateCategory: Category): Promise<Category> {
+    // Update category by ID
+    static async updateCategoryByID(id: any, updateCategory: any): Promise<any> {
         try {
-            const response = await fetch(`http://localhost:3000/api/update-category/${id}`, {
-                method: 'PUT',
+            const response = await fetch(`${apiUrl}api/update-category/${id}`, {
+                method: 'POST',
+                body: JSON.stringify(updateCategory),
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updateCategory),
             });
             
             if (!response.ok) {
@@ -88,18 +90,21 @@ export class CategoryService {
             return data;
         } catch (error) {
             console.error('Error updating category:', error);
-            throw error; // Ném lỗi ra ngoài để xử lý
+            throw error;
         }
     }
 
-    // Hàm xóa danh mục theo ID
+    // Delete category by ID
     static async deleteCategoryByID(id: string): Promise<void> {
         try {
-            const response = await fetch(`http://localhost:3000/api/delete-category/${id}`, {
-                method: 'DELETE',
+            const response = await fetch(`${apiUrl}api/delete-category`, {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json', // Ensure the server knows the data type being sent
                 },
+                body: JSON.stringify({
+                    categoryId: id // Correct the key for consistency
+                }),
             });
             
             if (!response.ok) {
@@ -108,7 +113,7 @@ export class CategoryService {
 
         } catch (error) {
             console.error('Error deleting category:', error);
-            throw error; // Ném lỗi ra ngoài để xử lý
+            throw error;
         }
     }
 }

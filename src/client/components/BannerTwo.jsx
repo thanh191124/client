@@ -1,8 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { ProductController } from '../../controller/productController.tsx';
-import { CategoryController } from '../../controller/categoryController.tsx';
+import { ProductController } from '../../controller/productController.ts';
+import { CategoryController } from '../../controller/categoryController.ts';
 const BannerTwo = () => {
     const settings = {
         dots: true,
@@ -17,7 +17,7 @@ const BannerTwo = () => {
     };
     const[datacategory,setdatacategory] = useState([]);
     const showdataCategory = async () => {
-        const data = await CategoryController.fetchCategories();
+        const data = await CategoryController.getAllCategories();
         setdatacategory(data);
       }
     

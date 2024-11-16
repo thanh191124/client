@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import {CategoryController} from '../../controller/categoryController.ts';
+import {ProductController}  from '../../controller/productController.ts';
 import {
   ChakraProvider,
   Box,
@@ -13,6 +15,7 @@ import {
   useToast,
   Card,
 } from '@chakra-ui/react';
+import { data } from 'jquery';
 
 interface OptionCategory {
   CategoryID: string;
@@ -33,97 +36,116 @@ interface Product {
 }
 
 const UpdateProductForm = () => {
-
   const [optionCategory, setOptionCategory] = useState<OptionCategory[]>([]);
-  const [product, setProduct] = useState<Product | null>(null); // State to hold product data
+  const [product, setProduct] = useState<{
+    ProductName: string;
+    Description: string;
+    Price: string;
+    StockQuantity: string;
+    CategoryID: string;
+    status: string;
+    MainImage: File | null;
+    OtherImages: File[];
+    ShortDescription: string;
+  }>({
+    ProductName: '',
+    Description: '',
+    Price: '',
+    StockQuantity: '',
+    CategoryID: '',
+    status: '',
+    MainImage: null,
+    OtherImages: [],
+    ShortDescription: '',
+  });
   const toast = useToast();
   const location = useLocation();
-  const queryString = location.search; 
+  const queryString = location.search;
   const urlParams = new URLSearchParams(queryString);
-  const id = urlParams.get('id'); 
+  const id:any = urlParams.get('id');
 
-  // Fetch categories when component mounts
   useEffect(() => {
     const getDataCategory = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/getall-category', {
-          method: 'GET',
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
+        const data:any = await CategoryController.getAllCategories();
+        // const response = await fetch('http://localhost:3000/api/getall-category');
+        if (data) {
+          // const data = await response.json();
           setOptionCategory(data);
         } else {
-          console.error('Failed to fetch categories:', response.status);
+          console.error('Failed to fetch categories:', data.status);
         }
       } catch (error) {
         console.error('Error fetching categories:', error);
       }
     };
 
-    getDataCategory(); // Call the function to fetch categories
+    getDataCategory();
   }, []);
 
-  // Fetch product data when component mounts
+  const handleOtherImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setProduct({ ...product, OtherImages: Array.from(e.target.files) });
+    }
+  };
+
   useEffect(() => {
     const getProductData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/products/${id}`, {
-          method: 'GET',
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('dữ liệu', data['StockQuantity']);
-          setProduct({
-            ProductID: data['ProductID'],
-            ProductName: data['ProductName'],
-            Description: data['Description'],
-            Price: data['Price'],
-            StockQuantity: data['StockQuantity'],
-            CategoryID: data['CategoryID'],
-            status: data['status'],
-            ShortDescription: data['ShortDescription'],
-            Cost: data['Cost'],
-            Priority: data['Priority'],
-          });
+        // const response = await fetch(`http://localhost:3000/api/products/${id}`);
+        const data:any = await ProductController.getProductByID(id)
+        if (data) {
+        //   const data = await response.json();
+          setProduct(data);
         } else {
-          console.error('Failed to fetch product:', response.status);
+          console.error('Failed to fetch product:', data.status);
         }
       } catch (error) {
         console.error('Error fetching product:', error);
       }
     };
 
-    getProductData(); // Call the function to fetch product
+    getProductData();
   }, [id]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
+    setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
+    const formData = new FormData();
+    formData.append('ProductName', product.ProductName);
+    formData.append('Description', product.Description);
+    formData.append('Price', product.Price);
+    formData.append('StockQuantity', product.StockQuantity);
+    formData.append('CategoryID', product.CategoryID);
+    formData.append('status', product.status);
+    formData.append('ShortDescription', product.ShortDescription);
 
-    // Handle form data here
-    // Example: Send formData to API
+    product.OtherImages.forEach((image) => {
+      formData.append('OtherImages', image);
+    });
+
     try {
-      const response = await fetch(`http://localhost:3000/api/products/${id}`, {
-        method: 'PUT',
-        body: formData,
-      });
+      const  response = await ProductController.updateProductByID(id,formData)
+      // const response = await fetch(`http://localhost:3000/api/products/update/${id}`, {
+      //   method: 'POST',
+      //   body: formData, // Send FormData directly
+      // });
 
-      if (response.ok) {
-        toast({
-          title: 'Product updated.',
-          description: 'Your product information has been updated successfully.',
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-        });
+      if (response) {
+        alert('Your product information has been updated successfully.')
+        window.location.href = '/admin/products-management';
+
+        // toast({
+        //   title: 'Product updated.',
+        //   description: 'Your product information has been updated successfully.',
+        //   status: 'success',
+        //   duration: 3000,
+        //   isClosable: true,
+        // });
       } else {
         toast({
           title: 'Error updating product.',
@@ -146,25 +168,16 @@ const UpdateProductForm = () => {
   };
 
   return (
-    <Box pt={{ base: "20px", md: "80px", xl: "80px" }}>
-      <Card p={5} mb={{ base: "0px", lg: "40px" }} style={{ height: 'auto', width: '100%' }}>
+    <Box pt={{ base: '20px', md: '80px', xl: '80px' }}>
+      <Card p={5} mb={{ base: '0px', lg: '40px' }} style={{ height: 'auto', width: '100%' }}>
         <form onSubmit={handleSubmit}>
           <VStack spacing={4} align="stretch">
-            <FormControl isRequired>
-              <FormLabel>Vị Trí Ưu Tiên</FormLabel>
-              <Input
-                name="ProductName"
-                placeholder="Enter Product Name"
-                value={product?.ProductName || ''}
-                onChange={handleInputChange}
-              />
-            </FormControl>
             <FormControl isRequired>
               <FormLabel>Tên Sản Phẩm</FormLabel>
               <Input
                 name="ProductName"
                 placeholder="Enter Product Name"
-                value={product?.ProductName || ''}
+                value={product.ProductName}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -173,7 +186,7 @@ const UpdateProductForm = () => {
               <Textarea
                 name="Description"
                 placeholder="Enter Description"
-                value={product?.Description || ''}
+                value={product.Description}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -182,7 +195,7 @@ const UpdateProductForm = () => {
               <Textarea
                 name="ShortDescription"
                 placeholder="Enter Short Description"
-                value={product?.ShortDescription || ''}
+                value={product.ShortDescription}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -192,27 +205,17 @@ const UpdateProductForm = () => {
                 type="number"
                 name="Price"
                 placeholder="Enter Price"
-                value={product?.Price || 0}
+                value={product.Price}
                 onChange={handleInputChange}
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel>Giá Vốn</FormLabel>
-              <Input
-                type="number"
-                name="Cost"
-                placeholder="Enter Cost"
-                value={product?.Cost || ''}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Sổ Hàng</FormLabel>
+              <FormLabel>Số Hàng</FormLabel>
               <Input
                 type="number"
                 name="StockQuantity"
                 placeholder="Enter Stock Quantity"
-                value={product?.StockQuantity || 0}
+                value={product.StockQuantity}
                 onChange={handleInputChange}
               />
             </FormControl>
@@ -221,7 +224,7 @@ const UpdateProductForm = () => {
               <Select
                 name="CategoryID"
                 placeholder="Select Category"
-                value={product?.CategoryID || ''}
+                value={product.CategoryID}
                 onChange={handleInputChange}
               >
                 {optionCategory.map((category) => (
@@ -236,28 +239,24 @@ const UpdateProductForm = () => {
               <Select
                 name="status"
                 placeholder="Select Status"
-                value={product?.status || ''}
+                value={product.status}
                 onChange={handleInputChange}
               >
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </Select>
             </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Vị Trí</FormLabel>
+            <FormControl>
+              <FormLabel>Uploads Ảnh (Tối đa 5 ảnh)</FormLabel>
               <Input
-                type="number"
-                name="Priority"
-                placeholder="Enter Priority"
-                value={product?.Priority || 0}
-                onChange={handleInputChange}
+                type="file"
+                name="OtherImages"
+                accept="image/*"
+                onChange={handleOtherImagesChange}
+                multiple
               />
             </FormControl>
-            <FormControl>
-              <FormLabel>Uploads Ảnh Tối 5 Ảnh</FormLabel>
-              <Input type="file" name="image" accept="image/*" multiple />
-            </FormControl>
-            <Button type="submit" colorScheme="teal" size="lg">
+            <Button type="submit" size="lg" borderRadius="md" colorScheme="blue">
               Cập Nhật Dữ Liệu
             </Button>
           </VStack>

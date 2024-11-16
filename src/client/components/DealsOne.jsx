@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { getCountdown } from '../helper/Countdown';
-import { ProductController } from '../../controller/productController.tsx';
+import { ProductController } from '../../controller/productController.ts';
 
 
 const SampleNextArrow = memo(function SampleNextArrow(props) {

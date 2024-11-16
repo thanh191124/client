@@ -1,6 +1,7 @@
 import { BankAccount } from './../model/BankModel.ts'; // Removed duplicate and .ts extension
 import { Request, Response } from 'express';
 import { BankService } from '../services/BankServices.ts'; // Removed .ts extension
+const apiUrl = process.env.REACT_APP_API_URL;
 
 export class BankAccountController {
     private static bankService = new BankService(); // Create an instance of BankService

@@ -8,8 +8,8 @@ import ShippingTwo from "../components/ShippingTwo";
 import FooterTwo from "../components/FooterTwo";
 import ColorInit from "../helper/ColorInit";
 import ScrollToTop from "react-scroll-to-top";
-import { ProductController } from '../../controller/productController.tsx';
-import { CategoryController } from '../../controller/categoryController.tsx';
+import { ProductController } from '../../controller/productController.ts';
+import { CategoryController } from '../../controller/categoryController.ts';
 import { Link, useLocation } from 'react-router-dom';
 import ReactSlider from 'react-slider';
 
@@ -45,7 +45,7 @@ const ShopPage = () => {
 
     // Hàm lấy dữ liệu danh mục
     const showdataCategory = async () => {
-        const data = await CategoryController.fetchCategories();
+        const data = await CategoryController.getAllCategories();
         console.log("Categories fetched:", data); // Console log dữ liệu danh mục
         setCategories(data);
     }

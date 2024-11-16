@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'; // Nhập SweetAlert2
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Forgotpasswords = () => {
     const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ const Forgotpasswords = () => {
         console.log(formData);
     
         try {
-            const response = await fetch('http://localhost:3000/api/user/forgot-password', {
+            const response = await fetch(`${apiUrl}api/user/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

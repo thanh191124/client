@@ -1,5 +1,5 @@
 import { promise } from 'selenium-webdriver';
-import Product from '../model/ProductModel.tsx'; // Đảm bảo import đúng mô hình
+import {Product} from '../model/ProductModel.ts'; // Đảm bảo import đúng mô hình
 
 const API_URL = 'http://localhost:3000/api/products/';
 

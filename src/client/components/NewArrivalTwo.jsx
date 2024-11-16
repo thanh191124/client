@@ -1,7 +1,7 @@
 import React ,{useEffect,useState}from 'react'
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { ProductController } from '../../controller/productController.tsx';
+import { ProductController } from '../../controller/productController.ts';
 
 const NewArrivalTwo = () => {
     const [dataproductnew,setdataproductnew] = useState([]);

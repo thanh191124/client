@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import query from 'jquery';
 import { Link, NavLink ,useNavigate} from 'react-router-dom';
-import { CategoryController } from '../../controller/categoryController.tsx';
+import { CategoryController } from '../../controller/categoryController.ts';
 const HeaderOne = () => {
     const [scroll, setScroll] = useState(false)
     useEffect(() => {
@@ -68,7 +68,7 @@ const HeaderOne = () => {
 
     const[datacategory,setdatacategory] = useState([]);
     const showdataCategory = async () => {
-        const data = await CategoryController.fetchCategories();
+        const data = await CategoryController.getAllCategories();
         setdatacategory(data);
       }
     

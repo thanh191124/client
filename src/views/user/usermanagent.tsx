@@ -24,10 +24,8 @@ import {
     ModalFooter,
 } from "@chakra-ui/react";
 import { FaMoneyBill, FaUserTie, FaLock } from "react-icons/fa";
-import MiniCalendar from "components/calendar/MiniCalendar";
-import MiniStatistics from "components/card/MiniStatistics";
-import IconBox from "components/icons/IconBox";
-import { UserController } from '../../controller/userController.tsx'
+
+import { UserController } from '../../controller/userController.ts'
 import {
     MdAddTask,
     MdAttachMoney,
@@ -57,9 +55,8 @@ export default function UserManagementView() {
     useEffect(() => {
         fetchUsers();
     }, [])
-    const [users, setUsers] = useState([
+    const [users, setUsers] = useState<any>([]);
 
-    ]);
     const [status, setStatus] = useState([]);
 
     const [filter, setFilter] = useState("");

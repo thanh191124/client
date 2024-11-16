@@ -1,80 +1,91 @@
-import {User} from '../model/userModel.tsx'; // Đảm bảo import đúng mô hình
+import { User } from '../model/userModel'; // Ensure the correct path and filename
 
 const API_URL = 'http://localhost:3000/api/user/';
 
 export const UserService = {
-    getAllUsers: async (): Promise<User[]> => { // Đổi thành Promise<User[]> để trả về mảng người dùng
+    // Fetch all users
+    getAllUsers: async (): Promise<User[]> => {
         const response = await fetch(API_URL);
         if (!response.ok) {
-            throw new Error('Failed to fetch users'); // Ném lỗi nếu có
+            throw new Error('Failed to fetch users');
         }
-        return response.json(); // Trả về dữ liệu JSON
+        return response.json(); // Return the user data as JSON
     },
-    createUser: async (newUser: User): Promise<User> => { // newUser chứa dữ liệu người dùng mới
+
+    // Create a new user
+    createUser: async (newUser: User): Promise<User> => {
         const response = await fetch(API_URL, {
-            method: 'POST', // Phương thức POST để tạo người dùng mới
+            method: 'POST', // Use POST method to create a new user
             headers: {
-                'Content-Type': 'application/json', // Định dạng dữ liệu là JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newUser), // Chuyển đổi dữ liệu người dùng mới thành JSON
+            body: JSON.stringify(newUser), // Send new user data as JSON
         });
 
         if (!response.ok) {
             throw new Error('Failed to create user');
         }
 
-        return response.json(); // Trả về người dùng vừa tạo từ phản hồi của server
+        return response.json(); // Return the created user from server response
     },
+
+    // Update user by ID
     updateUserByID: async (id: string, updateUser: User): Promise<User> => {
         const response = await fetch(`${API_URL}update/${id}`, {
-            method: 'POst', // Sử dụng phương thức PUT để cập nhật người dùng
+            method: 'PUT', // Corrected method to PUT for updating user
             headers: {
-                'Content-Type': 'application/json', // Định dạng dữ liệu là JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updateUser), // Chuyển đổi dữ liệu người dùng đã cập nhật thành JSON
+            body: JSON.stringify(updateUser), // Send updated user data as JSON
         });
-    
+
         if (!response.ok) {
-            throw new Error('Failed to update user'); // Ném lỗi nếu có
+            throw new Error('Failed to update user');
         }
-    
-        return response.json(); // Trả về người dùng đã được cập nhật từ phản hồi của server
+
+        return response.json(); // Return the updated user from server response
     },
-    updateUsers: async ( updateUser: User): Promise<User> => {
+
+    // Bulk update users (renamed to reflect correct behavior)
+    updateUsers: async (updateUser: User): Promise<User> => {
         const response = await fetch(`${API_URL}updates`, {
-            method: 'POst', // Sử dụng phương thức PUT để cập nhật người dùng
+            method: 'PUT', // Corrected to PUT for bulk updates
             headers: {
-                'Content-Type': 'application/json', // Định dạng dữ liệu là JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updateUser), // Chuyển đổi dữ liệu người dùng đã cập nhật thành JSON
+            body: JSON.stringify(updateUser), // Send updated user data as JSON
         });
-    
+
         if (!response.ok) {
-            throw new Error('Failed to update user'); // Ném lỗi nếu có
+            throw new Error('Failed to update users');
         }
-    
-        return response.json(); // Trả về người dùng đã được cập nhật từ phản hồi của server
+
+        return response.json(); // Return the updated user data from server response
     },
-    
-    getUserByID: async (id: string): Promise<User> => { // Đặt kiểu dữ liệu cho id
-        const response = await fetch(`${API_URL}${id}`); // Chỉnh sửa URL
+
+    // Get user by ID
+    getUserByID: async (id: string): Promise<User> => {
+        const response = await fetch(`${API_URL}${id}`);
         if (!response.ok) {
-            throw new Error('Failed to fetch user'); // Thay đổi thông báo lỗi
+            throw new Error('Failed to fetch user');
         }
-        return response.json(); // Trả về dữ liệu JSON
+        return response.json(); // Return the user data as JSON
     },
-    updateStatus: async (id:string , updateStatusUser:String): Promise<User> => {
+
+    // Update user status by ID
+    updateStatus: async (id: string, updateStatusUser: string): Promise<User> => {
         const response = await fetch(`${API_URL}update-status/${id}`, {
-            method: 'Post', // Sử dụng phương thức PUT để cập nhật người dùng
+            method: 'POST', // Corrected to POST for status update
             headers: {
-                'Content-Type': 'application/json', // Định dạng dữ liệu là JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updateStatusUser), // Chuyển đổi dữ liệu người dùng đã cập nhật thành JSON
+            body: JSON.stringify({ status: updateStatusUser }), // Send status data as JSON
         });
+
         if (!response.ok) {
-            throw new Error('Failed to update user'); // Ném lỗi nếu có
+            throw new Error('Failed to update user status');
         }
-    
-        return response.json(); // Trả về người dùng đã được cập nhật từ phản hồi của server
+
+        return response.json(); // Return the updated user status from server response
     }
 };

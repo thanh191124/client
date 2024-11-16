@@ -28,7 +28,7 @@ export default function VoucherForm() {
   const query = new URLSearchParams(location.search);
   const id = query.get('id') || ""; // Lấy id từ query params
 
-  const [voucher, setVoucher] = useState<Voucher>({
+  const [voucher, setVoucher] = useState<any>({
     VoucherID: "",
     Code: "",
     DiscountAmount: "",
@@ -84,6 +84,8 @@ export default function VoucherForm() {
       setModalMessage("Voucher updated successfully!");
       setIsSuccess(true);
       onOpen();
+      window.location.href = '/admin/voucher-management';  // This will change the page URL
+
     } catch (error) {
       console.error('Error updating voucher:', error);
       setModalMessage("Error updating voucher. Please try again.");
@@ -192,7 +194,8 @@ export default function VoucherForm() {
               />
             </FormControl>
 
-            <Button type="submit" colorScheme="teal" width="full">
+            <Button type="submit" colorScheme="blue"          borderRadius="md"
+ width="full">
               Cập Nhật
             </Button>
           </VStack>

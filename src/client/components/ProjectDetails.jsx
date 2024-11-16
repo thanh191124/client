@@ -6,6 +6,7 @@ import HistoryBuy from './HistoryBuy';
 import OrderDetailPage from './OrderDetailPage.jsx';
 import {UserService} from '../../services/UserService.ts';
 import { useNavigate ,useLocation} from 'react-router-dom'; // Import useNavigate thay vì useHistory
+const apiUrl = process.env.REACT_APP_API_URL;
 
 // Dummy components for different pages
 const handleLogout = () => {
@@ -40,7 +41,7 @@ const ProfileInfo = () => {
 
   const getInfo = () => {
     setLoading(true); // Set loading to true before making API call
-    fetch('http://localhost:3000/api/user/checkdatauser', {
+    fetch(`${apiUrl}api/user/checkdatauser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

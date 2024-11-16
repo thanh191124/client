@@ -8,16 +8,17 @@ import BottomFooter from "../components/BottomFooter";
 import CartSection from "../components/CartSection";
 import ShippingOne from "../components/ShippingOne";
 import ScrollToTop from "react-scroll-to-top";
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
 import { VoucherService } from '../../services/VoucherService.ts';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromProduct, updateProductQuantity, updateTotalPrices } from '../../redux/acction/cartActions.ts'; // Đảm bảo đường dẫn đúng
+import { removeFromProduct, updateProductQuantity, updateTotalPrices ,clearCart } from '../../redux/acction/cartActions.ts'; // Đảm bảo đường dẫn đúng
 import Swal from 'sweetalert2'; // Nhập SweetAlert2
 import { Modal, Button } from 'react-bootstrap';  // Import các component từ Bootstrap
 import { jwtDecode } from 'jwt-decode';
 import { AddressController } from '../../services/AddressController.ts';
 import { OrderService } from '../../services/OrderService.ts'
 import QuantityControl from '../helper/QuantityControl'
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const CartPage = () => {
   const tokenUser = localStorage.getItem('tokenUser');
@@ -53,7 +54,9 @@ const CartPage = () => {
             // Gọi API để lấy địa chỉ bằng userId
             const res = await AddressController.getAlladdressById(decodedToken.userId);
             setaddresses(res); // Cập nhật state địa chỉ
+            console.log("giá trị adress")
             console.log(res); // Hiển thị dữ liệu địa chỉ
+
 
         } catch (error) {
             console.error('Error decoding token or fetching addresses:', error);
@@ -166,8 +169,9 @@ const CartPage = () => {
         [id]: newQuantity,
       };
     });
+    window.location.reload(); // Corrected
   };
-
+  
   const decrementQuantity = (id) => {
     setQuantities(prevQuantities => {
       const newQuantity = Math.max((prevQuantities[id] || 1) - 1, 1); // Giảm số lượng nếu lớn hơn 1
@@ -177,8 +181,9 @@ const CartPage = () => {
         [id]: newQuantity,
       };
     });
+    window.location.reload(); // Corrected
   };
-
+  
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -196,12 +201,45 @@ const CartPage = () => {
     console.log(dataorder);
 
   }
+  const [paymentMethod, setPaymentMethod] = useState('cod'); // Giá trị mặc định
+  const [bankAccounts, setBankAccounts] = useState([]); // Trạng thái để lưu danh sách tài khoản ngân hàng
+  const [dataship, setDataship] = useState({
+    PaymentType: '', // Initialize PaymentType with an empty string
+  });
+  const handlePaymentMethodChange = (event) => {
+    const { value } = event.target;
+    console.log(value)
+    setPaymentMethod(value);
+    setDataship((prevDataship) => ({
+      ...prevDataship, // Safely copy the previous state
+      PaymentType: value, // Update the PaymentType
+    }));
+    // Call API to fetch bank accounts if the selected method is 'online'
+    if (value === 'online') {
+      fetchBankAccounts();
+    }
+  };
+
+  const fetchBankAccounts = async () => {
+      try {
+          const response = await fetch(`${apiUrl}api/bank`);
+          if (!response.ok) {
+              throw new Error('Failed to fetch bank accounts');
+          }
+          const data = await response.json();
+          console.log("giá trị bank"+data)
+          setBankAccounts(data);
+      } catch (error) {
+          console.error('Error fetching bank accounts:', error);
+      }
+  };
   const [selectedAddress, setSelectedAddress] = useState({
     name: '',
     phone: '',
     addressType: '',
     address: '',
-    id_address: ''
+    id_address: '',
+    PaymentType:'',
   });
 
   const handlePlaceOrder = async () => {
@@ -225,6 +263,7 @@ const CartPage = () => {
         addresstype: selectedAddress['addressType'],
         recipientPhone: selectedAddress['phone'],
         recipientName: selectedAddress['name'],
+        PaymentType: dataship['PaymentType'],
       };
   
       try {
@@ -232,12 +271,15 @@ const CartPage = () => {
         // Call your API to place the order (Assuming OrderService.createOrder is implemented)
         const response = await OrderService.createOrder(orderDetails);
         if (response.status === true) {
+          dispatch(clearCart()); // Dispatch hành động xóa giỏ hàng
+
           Swal.fire({
             title: 'Đặt hàng thành công!',
             text: `Mã đơn hàng: ${response.orderId}`,
             icon: 'success',
             confirmButtonText: 'OK',
           });
+          navigate('/');
         } else {
           throw new Error('Đặt hàng thất bại!');
         }
@@ -283,6 +325,30 @@ const CartPage = () => {
   const handleCloseModal = () => {
     setIsModalOpen(false);  // Đóng modal khi nhấn "Đóng"
   };
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/profile'); // Navigate to the /profile page
+  };
+  const [bankData, setBankData] = useState([]);
+
+  const fetchBankData = async () => {
+    try {
+        const response = await fetch(`${apiUrl}api/bank`);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json(); // Chuyển đổi phản hồi thành JSON
+        setBankData(data); // Lưu dữ liệu vào state
+    } catch (err) {
+      console.log(err)
+    } finally {
+        setLoading(false); // Cập nhật trạng thái loading
+    }
+};
+useEffect(()=>{
+  fetchBankData();
+},[])
 
   return (
     <>
@@ -342,6 +408,8 @@ const CartPage = () => {
                     <p className="payment-titles">Địa chỉ nhận hàng</p>
                   </Modal.Header>
                   <Modal.Body>
+                  <Button className="change-btn"onClick={handleClick}>Thêm Địa Chỉ Mới</Button>
+
                     <ul className="list-group">
                       {Array.isArray(addresses) && addresses.map((address, index) => (
                         <li key={index} className="list-group-item" style={{ marginBottom: '20px' }}>
@@ -381,7 +449,7 @@ const CartPage = () => {
                         <th className="h6 mb-0 text-lg fw-bold" style={{ padding: '20px', color: 'white' }}>Tên Sản Phẩm</th>
                         <th className="h6 mb-0 text-lg fw-bold" style={{ padding: '20px', color: 'white' }}>Giá Sản Phẩm</th>
                         <th className="h6 mb-0 text-lg fw-bold" style={{ padding: '20px', color: 'white' }}>Số Lượng</th>
-                        <th className="h6 mb-0 text-lg fw-bold" style={{ padding: '20px', color: 'white' }}>Tổng Tiền</th>
+                        <th className="h6 mb-0 text-lg fw-bold" style={{ padding: '20px', color: 'white' }}>Thành Tiền</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -405,7 +473,7 @@ const CartPage = () => {
                                 className="table-product__thumb border border-gray-100 rounded-8 flex-center"
                               >
                                 <img
-                                  src={`http://localhost:3000/uploads/${item.OtherImages[0] || 'default-image.png'}`}
+                                  src={`${apiUrl}uploads/${item.OtherImages[0] || 'default-image.png'}`}
                                   alt={item.ProductName}
                                 />
                               </Link>
@@ -527,7 +595,7 @@ const CartPage = () => {
                     </span>
                   </div>
                 </div>
-                <div class="bg-color-three rounded-8 p-24 mt-24">
+                {/* <div class="bg-color-three rounded-8 p-24 mt-24">
                   <div class="d-flex justify-content-between gap-8">
                     <span class="text-gray-900 text-xl fw-semibold">Tổng Tiền</span>
                     {
@@ -538,7 +606,56 @@ const CartPage = () => {
                       ) : null
                     }
                   </div>
-                </div>
+                </div> */}
+                <div className="mt-16">
+            <span className="text-gray-900 text-lg fw-semibold">Chọn phương thức thanh toán:</span>
+            <div className="d-flex gap-16 mt-8 payment-options">
+                <label className={`payment-option ${paymentMethod === 'cod' ? 'selected' : ''}`}>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="cod"
+                        checked={paymentMethod === 'cod'}
+                        onChange={handlePaymentMethodChange}
+                    />
+                    <span className="text-gray-900">Khi nhận hàng</span>
+                </label>
+                <label className={`payment-option ${paymentMethod === 'online' ? 'selected' : ''}`}>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="online"
+                        checked={paymentMethod === 'online'}
+                        onChange={handlePaymentMethodChange}
+                    />
+                    <span className="text-gray-900">Thanh toán online</span>
+                </label>
+            </div>
+            <div className="mt-16 text-gray-900">
+    Bạn đã chọn phương thức thanh toán: 
+    <strong>
+        {paymentMethod === 'cod' ? 
+            'Khi nhận hàng' : 
+            'Thanh toán online vui lòng chuyển tiền và liên hệ Admin để xác nhận đơn hàng'}
+    </strong>
+    {paymentMethod !== 'cod' && (
+        <ul>
+            {bankData.map(bank => (
+                <li key={bank.id}>
+                    <strong>Tên ngân hàng: </strong>{bank.name}<br />
+                    <strong>Địa chỉ: </strong>{bank.address}<br />
+                    <strong>Số điện thoại: </strong>{bank.phone}
+                </li>
+            ))}
+        </ul>
+    )}
+</div>
+
+          
+        </div>
+
+
+
                 <button
                   className="btn btn-main mt-40 py-18 w-100 rounded-8"
                   onClick={handlePlaceOrder}

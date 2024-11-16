@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2'; // Nhập SweetAlert2
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const AddressInfo = () => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [addressData, setAddressData] = useState({
@@ -36,7 +38,7 @@ const AddressInfo = () => {
   
     const handleSaveAddress = () => {
       console.log('Address saved:', addressData);
-      fetch('http://localhost:3000/api/address/add',{
+      fetch(`${apiUrl}api/address/add`,{
         method:'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +68,7 @@ const AddressInfo = () => {
   
     const selectprovince = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/location/province', {
+        const response = await fetch(`${apiUrl}api/location/province`, {
           method: 'GET',
         });
   
@@ -90,7 +92,7 @@ const AddressInfo = () => {
   
     const showdatadistrict = async (id) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/location/district?id=${id}`, {
+        const response = await fetch(`${apiUrl}api/location/district?id=${id}`, {
           method: 'GET',
         });
   
@@ -107,7 +109,7 @@ const AddressInfo = () => {
   
     const showdatawards = async (id) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/location/wards?id=${id}`, {
+        const response = await fetch(`${apiUrl}api/location/wards?id=${id}`, {
           method: 'GET',
         });
   
@@ -138,7 +140,7 @@ const AddressInfo = () => {
         console.log(id);
         try {
             // Gửi request GET đến API để lấy thông tin địa chỉ
-            const response = await fetch(`http://localhost:3000/api/address/delete?idAddress=${id}`);
+            const response = await fetch(`${apiUrl}api/address/delete?idAddress=${id}`);
         
             if (!response.ok) {
               throw new Error('Failed to fetch address data');
@@ -170,7 +172,7 @@ const AddressInfo = () => {
 const handleUpdateClick = async (id) => {
   try {
     // Gửi request GET đến API để lấy thông tin địa chỉ
-    const response = await fetch(`http://localhost:3000/api/address/getid?idAddress=${id}`);
+    const response = await fetch(`${apiUrl}api/address/getid?idAddress=${id}`);
 
     if (!response.ok) {
       throw new Error('Failed to fetch address data');
@@ -233,7 +235,7 @@ const handleUpdateClick = async (id) => {
   
     const showDataAddress = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/address');
+        const response = await fetch(`${apiUrl}api/address`);
         
         // Kiểm tra nếu phản hồi thành công
         if (!response.ok) {

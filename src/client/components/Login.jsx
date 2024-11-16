@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'; // Nhập SweetAlert2
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Login = () => {
         e.preventDefault();
         console.log(formData);
 
-        fetch('http://localhost:3000/api/user/login', {
+        fetch(`${apiUrl}api/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

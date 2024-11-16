@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { OrderService } from '../../services/OrderService.ts';
+import { OrderService } from '../../controller/orderController.ts';
 
 const OrderDetailPage = () => {
     const location = useLocation();

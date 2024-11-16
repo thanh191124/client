@@ -8,7 +8,7 @@ import ShippingOne from "../components/ShippingOne";
 import FooterTwo from "../components/FooterTwo";
 import BottomFooter from "../components/BottomFooter";
 import ScrollToTop from "react-scroll-to-top";
-import { ProductController } from '../../controller/productController.tsx';
+import { ProductController } from '../../controller/productController.ts';
 import Slider from 'react-slick';
 import { getCountdown } from '../helper/Countdown';
 import { useLocation } from 'react-router-dom';
