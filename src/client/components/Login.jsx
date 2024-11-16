@@ -23,7 +23,7 @@ const Login = () => {
         e.preventDefault();
         console.log(formData);
 
-        fetch(`${apiUrl}api/user/login`, {
+        fetch(`${apiUrl}/api/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -7,7 +7,7 @@ export class CategoryController {
     // Fetch all categories
     static async getAllCategories(): Promise<Category[]> {
         try {
-            const response = await fetch(`${apiUrl}api/getall-category`, {
+            const response = await fetch(`${apiUrl}/api/getall-category`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export class CategoryController {
     // Create a new category
     static async createCategory(newCategory: any): Promise<Category> {
         try {
-            const response = await fetch(`${apiUrl}api/create-category`, {
+            const response = await fetch(`${apiUrl}/api/create-category`, {
                 method: 'POST',
                 body: JSON.stringify(newCategory),
                 headers: {
@@ -52,7 +52,7 @@ export class CategoryController {
     // Fetch category by ID
     static async getCategoryByID(id: string): Promise<Category> {
         try {
-            const response = await fetch(`${apiUrl}api/get-category/${id}`, {
+            const response = await fetch(`${apiUrl}/api/get-category/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export class CategoryController {
     // Update category by ID
     static async updateCategoryByID(id: any, updateCategory: any): Promise<any> {
         try {
-            const response = await fetch(`${apiUrl}api/update-category/${id}`, {
+            const response = await fetch(`${apiUrl}/api/update-category/${id}`, {
                 method: 'POST',
                 body: JSON.stringify(updateCategory),
                 headers: {
@@ -97,7 +97,7 @@ export class CategoryController {
     // Delete category by ID
     static async deleteCategoryByID(id: string): Promise<void> {
         try {
-            const response = await fetch(`${apiUrl}api/delete-category`, {
+            const response = await fetch(`${apiUrl}/api/delete-category`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json', // Ensure the server knows the data type being sent

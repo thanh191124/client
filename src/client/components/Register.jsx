@@ -59,7 +59,7 @@ const Register = () => {
     
         console.log(formData);
     
-        fetch(`${apiUrl}api/user/`, {
+        fetch(`${apiUrl}/api/user/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

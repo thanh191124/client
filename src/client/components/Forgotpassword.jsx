@@ -48,7 +48,7 @@ const Forgotpasswords = () => {
         console.log(formData);
     
         try {
-            const response = await fetch(`${apiUrl}api/user/forgot-password`, {
+            const response = await fetch(`${apiUrl}/api/user/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

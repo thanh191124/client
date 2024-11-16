@@ -41,7 +41,7 @@ const ProfileInfo = () => {
 
   const getInfo = () => {
     setLoading(true); // Set loading to true before making API call
-    fetch(`${apiUrl}api/user/checkdatauser`, {
+    fetch(`${apiUrl}/api/user/checkdatauser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -222,7 +222,7 @@ const CartPage = () => {
 
   const fetchBankAccounts = async () => {
       try {
-          const response = await fetch(`${apiUrl}api/bank`);
+          const response = await fetch(`${apiUrl}/api/bank`);
           if (!response.ok) {
               throw new Error('Failed to fetch bank accounts');
           }
@@ -334,7 +334,7 @@ const CartPage = () => {
 
   const fetchBankData = async () => {
     try {
-        const response = await fetch(`${apiUrl}api/bank`);
+        const response = await fetch(`${apiUrl}/api/bank`);
         if (!response.ok) {
             throw new Error(`Error: ${response.statusText}`);
         }
@@ -473,7 +473,7 @@ useEffect(()=>{
                                 className="table-product__thumb border border-gray-100 rounded-8 flex-center"
                               >
                                 <img
-                                  src={`${apiUrl}uploads/${item.OtherImages[0] || 'default-image.png'}`}
+                                  src={`${apiUrl}/uploads/${item.OtherImages[0] || 'default-image.png'}`}
                                   alt={item.ProductName}
                                 />
                               </Link>
