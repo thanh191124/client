@@ -1,6 +1,6 @@
 import { Voucher } from '../model/voucherModel'; // Đảm bảo import đúng mô hình Voucher
 
-const API_URL = 'https://backenddt-main.onrender.com/api/api/vouchers/'; // Địa chỉ API cho voucher
+const API_URL = 'https://backenddt-main.onrender.com/api/vouchers/'; // Địa chỉ API cho voucher
 
 export const VoucherService = {
     // Lấy tất cả các voucher

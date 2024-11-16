@@ -38,7 +38,7 @@ export default function ProductAdd() {
             const response: any = await CategoryController.getAllCategories();
             console.log(response);
             setOptionCategory(response); // Set categories directly
-            // const response = await fetch('https://backenddt-main.onrender.com/api/api/getall-category', {
+            // const response = await fetch('https://backenddt-main.onrender.com/api/getall-category', {
             //     method: 'GET',
             // });
 

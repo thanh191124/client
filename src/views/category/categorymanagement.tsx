@@ -40,7 +40,7 @@ function CategoryOverview() {
     try {
       const data:any = await CategoryController.getAllCategories();
       console.log(data);
-      // const response = await fetch('https://backenddt-main.onrender.com/api/api/getall-category', {
+      // const response = await fetch('https://backenddt-main.onrender.com/api/getall-category', {
       //   method: 'GET', // Set method to GET
       // });
 
@@ -106,7 +106,7 @@ function CategoryOverview() {
     }
 
     try {
-      // const response = await fetch('https://backenddt-main.onrender.com/api/api/create-category', {
+      // const response = await fetch('https://backenddt-main.onrender.com/api/create-category', {
       //   method: "POST",
       //   body: formData, // Send FormData containing both text and file
       // });
@@ -127,7 +127,7 @@ function CategoryOverview() {
   const delete_category = async (id: string) => {
     try {
       const response:any = await CategoryController.deleteCategoryByID(id);
-      // const response = await fetch('https://backenddt-main.onrender.com/api/api/delete-category', {
+      // const response = await fetch('https://backenddt-main.onrender.com/api/delete-category', {
       //   method: "POST",
       //   headers: {
       //     'Content-Type': 'application/json', // Ensure the server knows the data type being sent

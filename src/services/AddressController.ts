@@ -5,7 +5,7 @@ export class AddressController {
     // Hàm lấy tất cả danh mục
     static async getAlladdressById(UserID: number): Promise<Address[]> { // Đổi thành kiểu trả về đúng
         try {
-            const response = await fetch('https://backenddt-main.onrender.com/api/api/address/byuser', {
+            const response = await fetch('https://backenddt-main.onrender.com/api/address/byuser', {
                 method: 'POST',  // POST phải viết hoa
                 body: JSON.stringify({ "UserID": UserID }),  // Cần chuyển body thành chuỗi JSON
                 headers: {

@@ -288,7 +288,7 @@ const Profile = () => {
   // });
 
   // const getInfo = () => {
-  //   fetch('https://backenddt-main.onrender.com/api/api/user/checkdatauser', {
+  //   fetch('https://backenddt-main.onrender.com/api/user/checkdatauser', {
   //     method: 'POST',
   //     headers: {
   //       'Content-Type': 'application/json',

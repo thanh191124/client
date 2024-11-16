@@ -1,7 +1,7 @@
 import { promise } from 'selenium-webdriver';
 import Product from '../model/ProductModel.tsx'; // Đảm bảo import đúng mô hình
 
-const API_URL = 'https://backenddt-main.onrender.com/api/api/products/';
+const API_URL = 'https://backenddt-main.onrender.com/api/products/';
 
 export const ProductService = {
     getAllProducts: async (): Promise<Product[]> => {

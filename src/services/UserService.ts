@@ -1,6 +1,6 @@
 import { User } from '../model/userModel'; // Ensure the correct path and filename
 
-const API_URL = 'https://backenddt-main.onrender.com/api/api/user/';
+const API_URL = 'https://backenddt-main.onrender.com/api/user/';
 
 export const UserService = {
     // Fetch all users

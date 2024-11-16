@@ -68,7 +68,7 @@ const UpdateProductForm = () => {
     const getDataCategory = async () => {
       try {
         const data:any = await CategoryController.getAllCategories();
-        // const response = await fetch('https://backenddt-main.onrender.com/api/api/getall-category');
+        // const response = await fetch('https://backenddt-main.onrender.com/api/getall-category');
         if (data) {
           // const data = await response.json();
           setOptionCategory(data);
@@ -92,7 +92,7 @@ const UpdateProductForm = () => {
   useEffect(() => {
     const getProductData = async () => {
       try {
-        // const response = await fetch(`https://backenddt-main.onrender.com/api/api/products/${id}`);
+        // const response = await fetch(`https://backenddt-main.onrender.com/api/products/${id}`);
         const data:any = await ProductController.getProductByID(id)
         if (data) {
         //   const data = await response.json();
@@ -130,7 +130,7 @@ const UpdateProductForm = () => {
 
     try {
       const  response = await ProductController.updateProductByID(id,formData)
-      // const response = await fetch(`https://backenddt-main.onrender.com/api/api/products/update/${id}`, {
+      // const response = await fetch(`https://backenddt-main.onrender.com/api/products/update/${id}`, {
       //   method: 'POST',
       //   body: formData, // Send FormData directly
       // });

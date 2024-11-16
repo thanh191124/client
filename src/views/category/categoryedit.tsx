@@ -40,7 +40,7 @@ export default function CategoryEdit() {
             // console.log(JSON.stringify(formData));
             
             const response  = await CategoryController.updateCategoryByID(id,formData);
-            // const response = await fetch(`https://backenddt-main.onrender.com/api/api/update-category/${id}`, {
+            // const response = await fetch(`https://backenddt-main.onrender.com/api/update-category/${id}`, {
             //     method: 'POST',
             //     body: formData,
             // });
@@ -72,7 +72,7 @@ export default function CategoryEdit() {
                         location: _res[0]['location'],
                     });
             // try {
-            //     const response = await fetch(`https://backenddt-main.onrender.com/api/api/get-category/${id}`, {
+            //     const response = await fetch(`https://backenddt-main.onrender.com/api/get-category/${id}`, {
             //         method: 'GET',
             //     });
     
