@@ -244,7 +244,7 @@ const ShopPage = () => {
                                         >
                                             <div className="product-card__thumb flex-center rounded-8 bg-gray-50 position-relative">
                                                 <img
-                                                    src={`http://localhost:3000/uploads/${product.OtherImages[0]}`} // Hiển thị ảnh đầu tiên trong OtherImages
+                                                    src={`https://backenddt-main.onrender.com/api/uploads/${product.OtherImages[0]}`} // Hiển thị ảnh đầu tiên trong OtherImages
                                                     alt={product.ProductName}
                                                     className="w-auto max-w-unset" // Có thể bỏ nếu bạn đã định nghĩa CSS ở trên
                                                 />

@@ -5,7 +5,7 @@ export class OrderService {
     // Lấy tất cả đơn hàng
     static async getAllOrders(): Promise<Order[]> {
         try {
-            const response = await fetch('http://localhost:3000/api/order', {
+            const response = await fetch('https://backenddt-main.onrender.com/api/api/order', {
                 method: 'GET', // GET request để lấy tất cả đơn hàng
             });
             if (!response.ok) {
@@ -21,7 +21,7 @@ export class OrderService {
     // Lấy đơn hàng theo ID
     static async getOrderByID(orderId: number): Promise<Order | null> {
         try {
-            const response = await fetch(`http://localhost:3000/api/order/${orderId}`, {
+            const response = await fetch(`https://backenddt-main.onrender.com/api/api/order/${orderId}`, {
                 method: 'GET', // GET request để lấy đơn hàng theo ID
             });
             if (!response.ok) {
@@ -35,7 +35,7 @@ export class OrderService {
     }
         static async searchorder(formData: string): Promise<any> {
             try {
-                const response = await fetch('http://localhost:3000/api/order/search', {
+                const response = await fetch('https://backenddt-main.onrender.com/api/api/order/search', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export class OrderService {
     // láy đơn hàng theo id 
     static async getOrdersByUserId(userid: string): Promise<any> {
         try {
-            const response = await fetch('http://localhost:3000/api/order/byuser', {
+            const response = await fetch('https://backenddt-main.onrender.com/api/api/order/byuser', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export class OrderService {
     // Tạo đơn hàng mới
     static async createOrder(newOrder: Order): Promise<Order> {
         try {
-            const response = await fetch('http://localhost:3000/api/order/creater', {
+            const response = await fetch('https://backenddt-main.onrender.com/api/api/order/creater', {
                 method: 'POST', // POST request để tạo đơn hàng mới
                 headers: {
                     'Content-Type': 'application/json', // Đảm bảo gửi dữ liệu dạng JSON
@@ -103,7 +103,7 @@ export class OrderService {
     }
     static async showorderdetail(id: string): Promise<any> {
         try {
-            const response = await fetch(`http://localhost:3000/api/orderdetail/get?id=${id}`, {
+            const response = await fetch(`https://backenddt-main.onrender.com/api/api/orderdetail/get?id=${id}`, {
                 method: 'GET', // Phương thức GET
                 headers: {
                     'Content-Type': 'application/json', // Định dạng dữ liệu
@@ -125,7 +125,7 @@ export class OrderService {
     }
         static async getFullOrder(): Promise<any> {
           try {
-            const response = await fetch('http://localhost:3000/api/order');
+            const response = await fetch('https://backenddt-main.onrender.com/api/api/order');
             // Kiểm tra nếu phản hồi là thành công (status 200 - 299)
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
@@ -144,7 +144,7 @@ export class OrderService {
                
         
                 // Gửi yêu cầu PUT đến API cập nhật trạng thái đơn hàng
-                const response = await fetch('http://localhost:3000/api/order/update', {
+                const response = await fetch('https://backenddt-main.onrender.com/api/api/order/update', {
                     method: 'Post', // Sử dụng phương thức PUT để cập nhật
                     headers: {
                         'Content-Type': 'application/json', // Đặt header cho nội dung JSON
@@ -168,7 +168,7 @@ export class OrderService {
         static async getFullOrdersByOrderId(orderId: number): Promise<any> {
             try {
                 // Tạo URL với orderId đã cho
-                const url = `http://localhost:3000/api/orderdetail/get?id=${orderId}`;
+                const url = `https://backenddt-main.onrender.com/api/api/orderdetail/get?id=${orderId}`;
                 const response = await fetch(url);
                 
                 // Kiểm tra nếu phản hồi là thành công (status 200 - 299)

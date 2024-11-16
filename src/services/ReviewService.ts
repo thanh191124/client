@@ -2,7 +2,7 @@
 
 import { Await } from "react-router-dom";
 
-const API_URL = 'http://localhost:3000/api/review/';
+const API_URL = 'https://backenddt-main.onrender.com/api/api/review/';
 
 export const ReviewService = {
     // Lấy tất cả các đánh giá

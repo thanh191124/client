@@ -1,7 +1,7 @@
 import { BankAccount } from '../model/BankModel'; // Đảm bảo đường dẫn và tên file đúng
 
 export class BankService {
-    private apiUrl: string = 'http://localhost:3000/api/bank'; // URL của API
+    private apiUrl: string = 'https://backenddt-main.onrender.com/api/api/bank'; // URL của API
 
     // Thêm tài khoản ngân hàng
     async addBankAccount(account: BankAccount): Promise<BankAccount> {

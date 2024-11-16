@@ -1,6 +1,6 @@
 import { Product } from '../model/ProductModel'; // Ensure the path and file name are correct
 
-const API_URL = 'http://localhost:3000/api/products/';
+const API_URL = 'https://backenddt-main.onrender.com/api/api/products/';
 
 export class ProductController {
     // Fetch all products

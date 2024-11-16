@@ -40,7 +40,7 @@ function CategoryOverview() {
     try {
       const data:any = await CategoryController.getAllCategories();
       console.log(data);
-      // const response = await fetch('http://localhost:3000/api/getall-category', {
+      // const response = await fetch('https://backenddt-main.onrender.com/api/api/getall-category', {
       //   method: 'GET', // Set method to GET
       // });
 
@@ -106,7 +106,7 @@ function CategoryOverview() {
     }
 
     try {
-      // const response = await fetch('http://localhost:3000/api/create-category', {
+      // const response = await fetch('https://backenddt-main.onrender.com/api/api/create-category', {
       //   method: "POST",
       //   body: formData, // Send FormData containing both text and file
       // });
@@ -127,7 +127,7 @@ function CategoryOverview() {
   const delete_category = async (id: string) => {
     try {
       const response:any = await CategoryController.deleteCategoryByID(id);
-      // const response = await fetch('http://localhost:3000/api/delete-category', {
+      // const response = await fetch('https://backenddt-main.onrender.com/api/api/delete-category', {
       //   method: "POST",
       //   headers: {
       //     'Content-Type': 'application/json', // Ensure the server knows the data type being sent
@@ -177,7 +177,7 @@ function CategoryOverview() {
                 transition="transform 0.2s ease"
               >
                 <Image
-                  src={`http://localhost:3000/uploads/${category.ImageURL}`}
+                  src={`https://backenddt-main.onrender.com/api/uploads/${category.ImageURL}`}
                   alt={category.CategoryName}
                   boxSize={["25px", "30px"]}
                   borderRadius="full"
@@ -240,7 +240,7 @@ function CategoryOverview() {
                           </Td>
                           <Td>
                             <Image
-                              src={`http://localhost:3000/uploads/${selectedCategory.ImageURL}`}
+                              src={`https://backenddt-main.onrender.com/api/uploads/${selectedCategory.ImageURL}`}
                               width="40px"
                               alt={selectedCategory.CategoryName}
                               borderRadius="md"

@@ -76,7 +76,7 @@ const countOrderMonth = [
 ];
   const countUser = async () => {
       try {
-          const res = await fetch('http://localhost:3000/api/user/get-count');
+          const res = await fetch('https://backenddt-main.onrender.com/api/api/user/get-count');
           const data = await res.json(); // Chuyển đổi phản hồi sang JSON
   
           console.log("Dữ liệu trả về:", data); // In ra dữ liệu nhận được
@@ -91,7 +91,7 @@ const countOrderMonth = [
     { month: "", totalOrders: 0, totalRevenue: 0 }
 ]);  const countOrdersum = async () => {
     try {
-        const res = await fetch('http://localhost:3000/api/order/get-sum-moth');
+        const res = await fetch('https://backenddt-main.onrender.com/api/api/order/get-sum-moth');
         const data = await res.json(); // Chuyển đổi phản hồi sang JSON
 
         console.log("Dữ liệu trả về:", data); // In ra dữ liệu nhận được
@@ -104,7 +104,7 @@ const countOrderMonth = [
 };
   const countOrder = async () => {
     try {
-        const res = await fetch('http://localhost:3000/api/order/get-total-orders');
+        const res = await fetch('https://backenddt-main.onrender.com/api/api/order/get-total-orders');
         const data = await res.json(); // Chuyển đổi phản hồi sang JSON
 
         console.log("Dữ liệu trả về:", data); // In ra dữ liệu nhận được

@@ -24,7 +24,7 @@ const TokenPasswords = () => {
         
         // Send POST request to update the password
         try {
-            const response = await fetch('http://localhost:3000/api/user/reset-password', {
+            const response = await fetch('https://backenddt-main.onrender.com/api/api/user/reset-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

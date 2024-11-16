@@ -47,7 +47,7 @@ export default function ProductManagement() {
     const showData = async () => {
         try {
             const data:any = await ProductController.fetchProducts();
-            // const response = await fetch('http://localhost:3000/api/products/', {
+            // const response = await fetch('https://backenddt-main.onrender.com/api/api/products/', {
             //     method: 'GET',
             // });
 
