@@ -5,7 +5,7 @@ export class CategoryService {
     // Hàm lấy tất cả danh mục
     static async getAllCategories(): Promise<Category[]> {
         try {
-            const response = await fetch('https://backenddt-main.onrender.com/api/getall-category', {
+            const response = await fetch('https://backenddt-main.onrender.com/getall-category', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export class CategoryService {
     // Hàm tạo danh mục mới
     static async createCategory(newCategory: Category): Promise<Category> {
         try {
-            const response = await fetch('https://backenddt-main.onrender.com/api/create-category', {
+            const response = await fetch('https://backenddt-main.onrender.com/create-category', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export class CategoryService {
     // Hàm lấy danh mục theo ID
     static async getCategoryByID(id: string): Promise<Category> {
         try {
-            const response = await fetch(`https://backenddt-main.onrender.com/api/get-category/${id}`, {
+            const response = await fetch(`https://backenddt-main.onrender.com/get-category/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export class CategoryService {
     // Hàm cập nhật danh mục theo ID
     static async updateCategoryByID(id: string, updateCategory: Category): Promise<Category> {
         try {
-            const response = await fetch(`https://backenddt-main.onrender.com/api/update-category/${id}`, {
+            const response = await fetch(`https://backenddt-main.onrender.com/update-category/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export class CategoryService {
     // Hàm xóa danh mục theo ID
     static async deleteCategoryByID(id: string): Promise<void> {
         try {
-            const response = await fetch(`https://backenddt-main.onrender.com/api/delete-category/${id}`, {
+            const response = await fetch(`https://backenddt-main.onrender.com/delete-category/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

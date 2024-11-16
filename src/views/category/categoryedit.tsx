@@ -40,7 +40,7 @@ export default function CategoryEdit() {
             // console.log(JSON.stringify(formData));
             
             const response  = await CategoryController.updateCategoryByID(id,formData);
-            // const response = await fetch(`https://backenddt-main.onrender.com/api/update-category/${id}`, {
+            // const response = await fetch(`https://backenddt-main.onrender.com/update-category/${id}`, {
             //     method: 'POST',
             //     body: formData,
             // });
@@ -72,7 +72,7 @@ export default function CategoryEdit() {
                         location: _res[0]['location'],
                     });
             // try {
-            //     const response = await fetch(`https://backenddt-main.onrender.com/api/get-category/${id}`, {
+            //     const response = await fetch(`https://backenddt-main.onrender.com/get-category/${id}`, {
             //         method: 'GET',
             //     });
     
@@ -133,7 +133,7 @@ export default function CategoryEdit() {
                                         <div className="mb-4">
                                             <label className="form-label" htmlFor="icon">Icon:</label>
                                             <input type="file" className="form-control" name="icon" />
-                                            <img src={`https://backenddt-main.onrender.com/api/uploads/${dataCategory.ImageURL}`} alt="Category Icon" width="50px" />
+                                            <img src={`https://backenddt-main.onrender.com/uploads/${dataCategory.ImageURL}`} alt="Category Icon" width="50px" />
                                         </div>
                                         <div className="mb-4">
                                             <label className="form-label" htmlFor="description">Description SEO:</label>

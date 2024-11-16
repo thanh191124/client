@@ -18,7 +18,7 @@ export default function TokenPassword() {
             if (token) {
                 try {
                     // Chú ý là bạn cần sửa URL ở đây
-                    const response = await fetch(`https://backenddt-main.onrender.com/api/user/check-password`, {
+                    const response = await fetch(`https://backenddt-main.onrender.com/user/check-password`, {
                         method: 'POST', // Sử dụng phương thức POST
                         headers: {
                             'Content-Type': 'application/json',

@@ -319,7 +319,7 @@ const ProductDetailsPageTwo = () => {
             <div className="">
                 <div className="product-details__thumb flex-center h-100">
                     <img
-                        src={mainImage ? `https://backenddt-main.onrender.com/api/uploads/${mainImage}` : 'https://backenddt-main.onrender.com/api/uploads/default-image.png'}
+                        src={mainImage ? `https://backenddt-main.onrender.com/uploads/${mainImage}` : 'https://backenddt-main.onrender.com/uploads/default-image.png'}
                         alt="Main Product"
                     />
                 </div>
@@ -332,7 +332,7 @@ const ProductDetailsPageTwo = () => {
                         product.OtherImages.map((image, index) => (
                             <div key={index} style={{ width: '100%', textAlign: 'center' }}>
                                 <img
-                                    src={`https://backenddt-main.onrender.com/api/uploads/${image}`}
+                                    src={`https://backenddt-main.onrender.com/uploads/${image}`}
                                     alt={`Other product view ${index + 1}`}
                                     onClick={() => setMainImage(image)}
                                     style={{ maxWidth: '100%', height: 'auto' }}

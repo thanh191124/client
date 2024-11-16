@@ -139,7 +139,7 @@ const NewArrivalTwo = () => {
                                         New%{" "}
                                     </span> */}
                                     <img
-                        src={`https://backenddt-main.onrender.com/api/uploads/${product.OtherImages[0]}`} // Cập nhật với URL ảnh đúng của sản phẩm
+                        src={`https://backenddt-main.onrender.com/uploads/${product.OtherImages[0]}`} // Cập nhật với URL ảnh đúng của sản phẩm
                         alt={product.ProductName}
                         className="w-auto max-w-unset"
                     />

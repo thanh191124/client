@@ -68,7 +68,7 @@ const UpdateProductForm = () => {
     const getDataCategory = async () => {
       try {
         const data:any = await CategoryController.getAllCategories();
-        // const response = await fetch('https://backenddt-main.onrender.com/api/getall-category');
+        // const response = await fetch('https://backenddt-main.onrender.com/getall-category');
         if (data) {
           // const data = await response.json();
           setOptionCategory(data);

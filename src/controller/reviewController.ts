@@ -1,6 +1,6 @@
 // import { Review } from '../model/reviewModel'; // Ensure to import the correct Review model
 
-const API_URL = 'https://backenddt-main.onrender.com/api/review/';
+const API_URL = 'https://backenddt-main.onrender.com/review/';
 
 export const ReviewService = {
     // Get all reviews
