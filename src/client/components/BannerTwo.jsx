@@ -71,14 +71,14 @@ const BannerTwo = () => {
         <Slider {...settings}>
             <div className="banner-item-two">
                 <img
-                    src="https://taozinsaigon.com/files_upload/weblink/slide-iphone-15-series-2005.jpg"
+                    src="assets/images/bg/image.png"
                     alt=""
                     className="banner-img position-absolute inset-block-start-0 inset-inline-start-0 w-100 h-100 z-n1 object-fit-cover rounded-24 banner-ims"
                 />
             </div>
             <div className="banner-item-two">
                 <img
-                    src="https://taozinsaigon.com/files_upload/weblink/slide-iphone-15-series-2005.jpg"  // Thay đổi đường dẫn ảnh cho slide tiếp theo
+                    src="assets/images/bg/imageb1.png"  // Thay đổi đường dẫn ảnh cho slide tiếp theo
                     alt=""
                     className="banner-img position-absolute inset-block-start-0 inset-inline-start-0 w-100 h-100 z-n1 object-fit-cover rounded-24"
                 />
