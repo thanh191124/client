@@ -458,7 +458,7 @@ useEffect(()=>{
                           <td style={{ padding: '20px' }}>
                             <button
                               type="button"
-                              className="remove-tr-btn flex-align gap-12 hover-text-danger-600"
+                              className="remove-tr-btn flex-align gap-12 hover-text-danger-600 bg-red-500"
                               // Thêm hàm xóa sản phẩm nếu cần
                               onClick={() => { handleRemoveToCart(item.ProductID) }}
                             >
